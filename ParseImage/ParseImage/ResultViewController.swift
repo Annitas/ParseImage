@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ResultViewController: UIViewController {
     var images = [String]()
@@ -14,24 +15,35 @@ final class ResultViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        // Создаем вертикальный стек вид для размещения изображений и ссылок
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
+        scrollView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
         
         // Добавляем изображения и ссылки на них в стек вид
         for imageUrl in images {
             var str = imageUrl
             str.insert("s", at: imageUrl.index(imageUrl.startIndex, offsetBy: 4))
-            print(str)
             if let url = URL(string: str) {
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     if let data = data, let image = UIImage(data: data) {
@@ -53,7 +65,7 @@ final class ResultViewController: UIViewController {
                     }
                 }.resume()
             } else {
-                print("Некорректный URL: \(imageUrl)")
+                print("Некорректный URL: \(str)")
             }
         }
     }
