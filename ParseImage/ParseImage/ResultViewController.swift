@@ -11,35 +11,38 @@ import SnapKit
 final class ResultViewController: UIViewController {
     var images = [String]()
     
+    private let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+    
+    private let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.alignment = .center
+        sv.spacing = 10
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints()
         scrollView.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-        ])
-        
+
+        stackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        fetchInfo()
+    }
+    
+    private func fetchInfo() {
         for imageUrl in images {
             var str = imageUrl
             str.insert("s", at: imageUrl.index(imageUrl.startIndex, offsetBy: 4))
@@ -60,9 +63,9 @@ final class ResultViewController: UIViewController {
                             sizeLabel.text = "\(data.count)"
                             sizeLabel.textAlignment = .center
                             
-                            stackView.addArrangedSubview(imageView)
-                            stackView.addArrangedSubview(label)
-                            stackView.addArrangedSubview(sizeLabel)
+                            self.stackView.addArrangedSubview(imageView)
+                            self.stackView.addArrangedSubview(label)
+                            self.stackView.addArrangedSubview(sizeLabel)
                         }
                     } else {
                         print("Не удалось загрузить изображение по URL: \(str)")
@@ -73,4 +76,15 @@ final class ResultViewController: UIViewController {
             }
         }
     }
+
+    private func addConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
 }
+
+
