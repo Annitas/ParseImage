@@ -57,6 +57,7 @@ final class ResultViewController: UIViewController {
                             
                             let label = UILabel()
                             label.text = str
+                            label.numberOfLines = 0
                             label.textAlignment = .center
                             
                             let sizeLabel = UILabel()
