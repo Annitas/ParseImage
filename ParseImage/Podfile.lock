@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (5.6.4)
+  - SnapKit (5.6.0)
+  - SwiftSoup (2.7.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - SnapKit (~> 5.6)
+  - SwiftSoup
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - SnapKit
+    - SwiftSoup
+
+SPEC CHECKSUMS:
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftSoup: 06cbbf665257adfbfe0c927c63de246e5e844b9d
+
+PODFILE CHECKSUM: cbd98cac665179c82d5c664a22eb76f496d6401d
+
+COCOAPODS: 1.12.1
