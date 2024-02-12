@@ -10,7 +10,6 @@ import SnapKit
 import SwiftSoup
 
 final class ViewController: UIViewController {
-//    let resultVC = ResultViewController()
     
     private let enterLinkField: UITextField = {
         let textField = UITextField()
@@ -53,10 +52,8 @@ final class ViewController: UIViewController {
         if let urlString = enterLinkField.text, let url = URL(string: urlString) {
             fetchImagesFromURL(url: url) { [weak self] in
                 DispatchQueue.main.async {
-//                    print(self!.imageDict)
                     let vc = ResultViewController()
                     vc.images = self?.imageDict ?? []
-                    vc.title = "LOOL"
                     let navVC = UINavigationController(rootViewController: vc)
                     self?.present(navVC, animated: true)
                 }
@@ -80,14 +77,12 @@ final class ViewController: UIViewController {
                 } else {
                     for image in images {
                         let imageUrl = try image.attr("src")
-//                        print(image)
-//                        let imageSize = try image.attr("size")
                         if imageUrl.hasPrefix("http") {
                             self.imageDict.append(imageUrl)
                         }
                     }
                 }
-                completion() // Вызов блока завершения после получения данных
+                completion()
             } catch {
                 print("Ошибка парсинга HTML: \(error.localizedDescription)")
             }

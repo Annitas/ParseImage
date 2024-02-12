@@ -40,7 +40,6 @@ final class ResultViewController: UIViewController {
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
         
-        // Добавляем изображения и ссылки на них в стек вид
         for imageUrl in images {
             var str = imageUrl
             str.insert("s", at: imageUrl.index(imageUrl.startIndex, offsetBy: 4))
@@ -57,8 +56,13 @@ final class ResultViewController: UIViewController {
                             label.text = str
                             label.textAlignment = .center
                             
+                            let sizeLabel = UILabel()
+                            sizeLabel.text = "\(data.count)"
+                            sizeLabel.textAlignment = .center
+                            
                             stackView.addArrangedSubview(imageView)
                             stackView.addArrangedSubview(label)
+                            stackView.addArrangedSubview(sizeLabel)
                         }
                     } else {
                         print("Не удалось загрузить изображение по URL: \(str)")
