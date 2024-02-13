@@ -32,8 +32,9 @@ final class ViewController: UIViewController {
     let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("SEARCH", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        button.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor.brown
+        button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -103,6 +104,8 @@ final class ViewController: UIViewController {
         searchButton.snp.makeConstraints { make in
             make.top.equalTo(enterLinkField.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
+            make.width.equalTo(250)
+            make.height.equalTo(40)
         }
     }
 }
